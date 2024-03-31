@@ -1,0 +1,40 @@
+version: '3.8'
+services:
+  backend:
+    image: backend:latest
+    build:
+      context: .
+    container_name: backend
+    ports:
+      - "8080:8080"
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      - DATASOURCE_URL=jdbc:postgresql://db:5432/number_generator
+      - DATASOURCE_DRIVER=${DATASOURCE_DRIVER}
+      - DATASOURCE_USERNAME=${DATASOURCE_USERNAME}
+      - DATASOURCE_PASSWORD=${DATASOURCE_PASSWORD}
+      - JWT_SECRET_KEY=${JWT_SECRET_KEY}
+
+  db:
+    image: postgres:16.2
+    container_name: db
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=${DATASOURCE_USERNAME}
+      - PGUSER=${DATASOURCE_USERNAME}
+      - POSTGRES_PASSWORD=${DATASOURCE_PASSWORD}
+    volumes:
+      - ./src/main/resources/db/create_db.sql:/docker-entrypoint-initdb.d/create_db.sql
+      - db-data:/var/lib/postgresql/data
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready", "--quiet"]
+      interval: 5s
+      timeout: 10s
+      retries: 10
+
+volumes:
+  db-data:

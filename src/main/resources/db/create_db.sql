@@ -1,0 +1,1 @@
+CREATE DATABASE number_generator;

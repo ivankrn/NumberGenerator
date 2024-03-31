@@ -1,0 +1,10 @@
+spring:
+    application:
+        name: NumberGenerator
+db:
+    jdbcUrl: ${DATASOURCE_URL}
+    driverClassName: ${DATASOURCE_DRIVER}
+    username: ${DATASOURCE_USERNAME}
+    password: ${DATASOURCE_PASSWORD}
+jwt:
+    secretKey: ${JWT_SECRET_KEY}
