@@ -25,6 +25,10 @@ public class ValidCarNumbersInitializer implements CommandLineRunner {
     @Override
     @Transactional
     public void run(String... args) {
+        if (carNumberRepository.getCount() != 0) {
+            logger.info("Database isn't empty, skipping valid car numbers initialization.");
+            return;
+        }
         logger.info("Valid car numbers initialization started.");
         Iterator<CarNumber> carNumberIterator = new CarNumberIterator(
                 List.of('В', 'А'),

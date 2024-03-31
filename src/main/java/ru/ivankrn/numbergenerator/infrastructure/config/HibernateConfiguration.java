@@ -58,7 +58,7 @@ public class HibernateConfiguration {
 
     private Properties hibernateProperties() {
         Properties hibernateProperties = new Properties();
-        hibernateProperties.setProperty("hibernate.hbm2ddl.auto", "create-drop");
+        hibernateProperties.setProperty("hibernate.hbm2ddl.auto", "none");
         hibernateProperties.setProperty("hibernate.jdbc.batch_size", "500");
         hibernateProperties.setProperty("hibernate.order_inserts", "true");
         hibernateProperties.setProperty("hibernate.order_updates", "true");
