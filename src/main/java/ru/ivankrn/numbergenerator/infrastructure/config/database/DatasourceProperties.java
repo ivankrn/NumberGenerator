@@ -1,4 +1,4 @@
-package ru.ivankrn.numbergenerator.infrastructure.config;
+package ru.ivankrn.numbergenerator.infrastructure.config.database;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;

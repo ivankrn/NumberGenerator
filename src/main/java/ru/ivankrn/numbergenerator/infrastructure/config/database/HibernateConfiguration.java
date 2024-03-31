@@ -1,4 +1,4 @@
-package ru.ivankrn.numbergenerator.infrastructure.config;
+package ru.ivankrn.numbergenerator.infrastructure.config.database;
 
 import com.zaxxer.hikari.HikariDataSource;
 import jakarta.persistence.EntityManager;

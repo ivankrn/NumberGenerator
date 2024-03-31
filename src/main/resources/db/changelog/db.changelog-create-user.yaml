@@ -1,0 +1,41 @@
+databaseChangeLog:
+  - changeSet:
+      id: 3
+      author: admin
+      changes:
+        - createSequence:
+            dataType: BIGINT
+            incrementBy: 1
+            schemaName: public
+            sequenceName: security_user_id_seq
+  - changeSet:
+      id: 4
+      author: admin
+      changes:
+        - createTable:
+            tableName: security_user
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  defaultValueComputed: nextVal('security_user_id_seq')
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+              - column:
+                  name: username
+                  type: NVARCHAR(255)
+                  constraints:
+                    nullable: false
+                    unique: true
+              - column:
+                  name: password
+                  type: NVARCHAR(255)
+                  constraints:
+                    nullable: false
+                    unique: true
+              - column:
+                  name: role
+                  type: NVARCHAR(255)
+                  constraints:
+                    nullable: false

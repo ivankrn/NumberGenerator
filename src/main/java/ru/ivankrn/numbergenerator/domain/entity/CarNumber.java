@@ -18,6 +18,8 @@ public class CarNumber {
     public static final Set<Character> validSeriesChars =
             Set.of('А', 'Е', 'Т', 'О', 'Р', 'Н', 'У', 'К', 'Х', 'С', 'В', 'М');
 
+    // TODO Спросить про натуральные и суррогатные ключи (может лучше сделать отдельный простой
+    //  автоинкрементирующийся суррогатный ключ, а не использовать составной ключ?). Не забыть про аннотацию @NaturalId
     @Id
     private int number;
     @Id
@@ -42,6 +44,8 @@ public class CarNumber {
 
     private static void validateNumber(int number) throws InvalidCarNumberException {
         if (number < 0 || number > 999) {
+            // TODO Спросить действительно ли лучше делать подобные строки константами, или JVM достаточно умна
+            //  чтобы определить их как неизменяемые и поместить в пул строк
             throw new InvalidCarNumberException("Number should be between 0 and 999");
         }
     }
@@ -82,6 +86,8 @@ public class CarNumber {
 
     @Override
     public int hashCode() {
+        // TODO Спросить про идентичность в домене и Hibernate
+        //  (equals и hashcode переопределяются специфично для Hibernate)
         return Objects.hash(number, series, region);
     }
 
