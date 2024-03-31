@@ -33,10 +33,11 @@ public class ValidCarNumbersInitializer implements CommandLineRunner {
         //  В текущем варианте алгоритм по сути "захардкожен", ведь я передаю в итератор список валидных символов и
         //  минимальный / максимальный номер для генерации.
         logger.info("Valid car numbers initialization started.");
+        List<Character> sortedValidChars = CarNumber.validSeriesChars.stream().sorted().toList();
         Iterator<CarNumber> carNumberIterator = new CarNumberIterator(
-                List.of('В', 'А'),
+                sortedValidChars,
                 0,
-                1,
+                999,
                 Region.TATARSTAN
         );
         // TODO Спросить можно ли ускорить вставку. На текущий момент на моем устройстве генерация 1,7 млн. номеров

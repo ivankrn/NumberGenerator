@@ -34,15 +34,14 @@ public class CarNumberRepositoryImpl implements CarNumberRepository {
 
     @Override
     public Optional<CarNumber> getNext(CarNumber previous) {
-        // TODO Учесть что серия (буквенная часть) следующего номера не обязана быть больше лексиграфически
         // TODO Спросить что следует отдавать если изначально был выдан последний номер
         TypedQuery<CarNumber> query = entityManager
                 .createQuery(
                         "SELECT cn FROM CarNumber cn " +
-                                "WHERE cn.number > :previous_number OR cn.series > :previous_series"
+                                "WHERE cn.id > :id " +
+                                "ORDER BY id"
                         , CarNumber.class);
-        query.setParameter("previous_number", previous.getNumber());
-        query.setParameter("previous_series", previous.getSeries());
+        query.setParameter("id", previous.getId());
         query.setMaxResults(1);
         try {
             return Optional.of(query.getSingleResult());
@@ -96,9 +95,10 @@ public class CarNumberRepositoryImpl implements CarNumberRepository {
         Query truncateQuery = entityManager.createNativeQuery("TRUNCATE last_issued_car_number");
         truncateQuery.executeUpdate();
         Query insertQuery = entityManager.createNativeQuery(
-                "INSERT INTO last_issued_car_number(\"number\", series, region) " +
-                        "VALUES(:number, :series, :region)"
+                "INSERT INTO last_issued_car_number(id, \"number\", series, region) " +
+                        "VALUES(:id, :number, :series, :region)"
         );
+        insertQuery.setParameter("id", carNumber.getId());
         insertQuery.setParameter("number", carNumber.getNumber());
         insertQuery.setParameter("series", carNumber.getSeries());
         insertQuery.setParameter("region", carNumber.getRegion());

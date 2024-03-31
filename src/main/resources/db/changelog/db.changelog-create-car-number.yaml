@@ -3,55 +3,73 @@ databaseChangeLog:
       id: 1
       author: admin
       changes:
+        - createSequence:
+            dataType: BIGINT
+            incrementBy: 1
+            schemaName: public
+            sequenceName: car_number_id_seq
+  - changeSet:
+      id: 2
+      author: admin
+      changes:
         - createTable:
             tableName: car_number
             columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  defaultValueComputed: nextVal('car_number_id_seq')
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_car_number
               - column:
                   name: number
                   type: INT
                   constraints:
                     nullable: false
-                    primaryKey: true
-                    primaryKeyName: pk_car_number
+                    unique: true
+                    uniqueConstraintName: car_number_unique
               - column:
                   name: series
                   type: NVARCHAR(3)
                   constraints:
                     nullable: false
-                    primaryKey: true
-                    primaryKeyName: pk_car_number
+                    unique: true
+                    uniqueConstraintName: car_number_unique
               - column:
                   name: region
                   type: TINYINT
                   constraints:
                     nullable: false
-                    primaryKey: true
-                    primaryKeyName: pk_car_number
+                    unique: true
+                    uniqueConstraintName: car_number_unique
   - changeSet:
-      id: 2
+      id: 3
       author: admin
       changes:
         - createTable:
             tableName: last_issued_car_number
             columns:
               - column:
-                  name: number
-                  type: INT
+                  name: id
+                  type: BIGINT
                   constraints:
                     nullable: false
                     primaryKey: true
                     primaryKeyName: pk_last_issued_car_number
+              - column:
+                  name: number
+                  type: INT
+                  constraints:
+                    nullable: false
               - column:
                   name: series
                   type: NVARCHAR(3)
                   constraints:
                     nullable: false
-                    primaryKey: true
-                    primaryKeyName: pk_last_issued_car_number
               - column:
                   name: region
                   type: TINYINT
                   constraints:
                     nullable: false
-                    primaryKey: true
-                    primaryKeyName: pk_last_issued_car_number

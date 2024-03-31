@@ -12,6 +12,8 @@ import java.util.Random;
 
 @Service
 @Transactional
+// TODO Спросить про уровень изоляции транзакций. Кажется, что в данном случае стоит использовать REPEATABLE READ или
+//  даже лучше SERIALIZABLE
 public class CarNumberGeneratorServiceImpl implements CarNumberGeneratorService {
 
     private final CarNumberRepository carNumberRepository;

@@ -1,18 +1,13 @@
 package ru.ivankrn.numbergenerator.domain.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.IdClass;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import ru.ivankrn.numbergenerator.domain.exception.InvalidCarNumberException;
 
-import java.util.Objects;
 import java.util.Set;
 import java.util.function.Predicate;
 
 @Entity
 @Table(name = "car_number")
-@IdClass(CarNumberId.class)
 public class CarNumber {
 
     public static final Set<Character> validSeriesChars =
@@ -23,10 +18,11 @@ public class CarNumber {
     // TODO Спросить, влияют ли композитные ключи на производительность БД и если да, то как сильно. Спросить
     //  применяются ли они на практике, или предпочтение отдается простым ключам.
     @Id
+    @SequenceGenerator(name = "car_number_id_seq", sequenceName = "car_number_id_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "car_number_id_seq")
+    private Long id;
     private int number;
-    @Id
     private String series;
-    @Id
     private Region region;
 
     private CarNumber() {
@@ -69,6 +65,14 @@ public class CarNumber {
         }
     }
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     public int getNumber() {
         return number;
     }
@@ -88,17 +92,20 @@ public class CarNumber {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        CarNumber carNumber = (CarNumber) o;
-        return number == carNumber.number && Objects.equals(series, carNumber.series) && region == carNumber.region;
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof CarNumber other)) {
+            return false;
+        }
+        return id != null && id.equals(other.getId());
     }
 
     @Override
     public int hashCode() {
         // TODO Спросить про идентичность в домене и Hibernate
         //  (equals и hashcode переопределяются специфично для Hibernate)
-        return Objects.hash(number, series, region);
+        return getClass().hashCode();
     }
 
 }
