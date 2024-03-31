@@ -7,9 +7,11 @@ import java.util.Optional;
 public interface CarNumberRepository {
 
     void save(CarNumber carNumber);
+    Optional<CarNumber> getNext(CarNumber previous);
+    Optional<CarNumber> getByPosition(int position);
+    long getCount();
     Optional<CarNumber> getLastIssuedNumber();
-    Optional<CarNumber> get(String number);
-    Optional<CarNumber> getRandom();
+    void setLastIssuedNumber(CarNumber carNumber);
     void delete(CarNumber carNumber);
 
 }
