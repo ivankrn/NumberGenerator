@@ -15,8 +15,8 @@ import java.util.List;
 @Component
 public class ValidCarNumbersInitializer implements CommandLineRunner {
 
-    private final CarNumberRepository carNumberRepository;
     private static final Logger logger = LoggerFactory.getLogger(ValidCarNumbersInitializer.class);
+    private final CarNumberRepository carNumberRepository;
 
     public ValidCarNumbersInitializer(CarNumberRepository carNumberRepository) {
         this.carNumberRepository = carNumberRepository;
@@ -29,6 +29,9 @@ public class ValidCarNumbersInitializer implements CommandLineRunner {
             logger.info("Car numbers database isn't empty, skipping valid car numbers initialization.");
             return;
         }
+        // TODO Спросить как не допустить "утечки" бизнес-правила валидности номера из домена в техническую область.
+        //  В текущем варианте алгоритм по сути "захардкожен", ведь я передаю в итератор список валидных символов и
+        //  минимальный / максимальный номер для генерации.
         logger.info("Valid car numbers initialization started.");
         Iterator<CarNumber> carNumberIterator = new CarNumberIterator(
                 List.of('В', 'А'),
@@ -36,11 +39,16 @@ public class ValidCarNumbersInitializer implements CommandLineRunner {
                 1,
                 Region.TATARSTAN
         );
+        // TODO Спросить можно ли ускорить вставку. На текущий момент на моем устройстве генерация 1,7 млн. номеров
+        //  занимает 2,5 минуты, и последующая вставка в базу около 40 секунд (даже с учетом batch вставки и
+        //  использования одной транзакции).
         while (carNumberIterator.hasNext()) {
             carNumberRepository.save(carNumberIterator.next());
         }
-        // TODO Учесть что вставка в БД на этот момент ещё может не произойти
+        // TODO Спросить как учесть что вставка в БД на этот момент ещё может не произойти
         logger.info("Valid car numbers initialization completed.");
+        // TODO Спросить как следовало бы реализовать вставку при условии работы нескольких инстансов приложения.
+        //  Запускать один инстанс, ожидать пока он завершит вставку, после чего подтягивать остальные?
     }
 
 }

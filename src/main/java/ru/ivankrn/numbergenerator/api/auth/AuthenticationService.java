@@ -11,10 +11,10 @@ import ru.ivankrn.numbergenerator.infrastructure.security.JwtService;
 @Service
 public class AuthenticationService {
 
+    private static final String USER_NOT_FOUND_MESSAGE = "User not found";
     private final UserRepository userRepository;
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
-    private static final String USER_NOT_FOUND_MESSAGE = "User not found";
 
     public AuthenticationService(UserRepository userRepository,
                                  JwtService jwtService,

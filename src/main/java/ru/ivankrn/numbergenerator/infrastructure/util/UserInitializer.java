@@ -13,9 +13,9 @@ import ru.ivankrn.numbergenerator.domain.repository.UserRepository;
 @Component
 public class UserInitializer implements CommandLineRunner {
 
+    private static final Logger logger = LoggerFactory.getLogger(UserInitializer.class);
     private final UserRepository userRepository;
     private final BCryptPasswordEncoder passwordEncoder;
-    private static final Logger logger = LoggerFactory.getLogger(UserInitializer.class);
 
     public UserInitializer(UserRepository userRepository, BCryptPasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
