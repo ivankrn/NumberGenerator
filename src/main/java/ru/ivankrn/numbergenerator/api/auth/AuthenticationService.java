@@ -5,7 +5,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import ru.ivankrn.numbergenerator.api.exception.NotFoundException;
-import ru.ivankrn.numbergenerator.domain.repository.UserRepository;
+import ru.ivankrn.numbergenerator.infrastructure.security.UserRepository;
 import ru.ivankrn.numbergenerator.infrastructure.security.JwtService;
 
 @Service

@@ -1,7 +1,8 @@
 package ru.ivankrn.numbergenerator.infrastructure.service;
 
-import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Transactional;
 import ru.ivankrn.numbergenerator.domain.entity.CarNumber;
 import ru.ivankrn.numbergenerator.domain.exception.NumbersRanOutException;
 import ru.ivankrn.numbergenerator.domain.repository.CarNumberRepository;
@@ -11,9 +12,7 @@ import java.util.Optional;
 import java.util.Random;
 
 @Service
-@Transactional
-// TODO Спросить про уровень изоляции транзакций. Кажется, что в данном случае стоит использовать REPEATABLE READ или
-//  даже лучше SERIALIZABLE
+@Transactional(isolation = Isolation.SERIALIZABLE)
 public class CarNumberGeneratorServiceImpl implements CarNumberGeneratorService {
 
     private final CarNumberRepository carNumberRepository;
@@ -29,7 +28,7 @@ public class CarNumberGeneratorServiceImpl implements CarNumberGeneratorService 
             long randomOffset = new Random().nextLong(0, totalCarNumberCount);
             CarNumber randomCarNumber = carNumberRepository.getByPosition((int) randomOffset)
                     .orElseThrow(NumbersRanOutException::new);
-            carNumberRepository.delete(randomCarNumber);
+            carNumberRepository.issue(randomCarNumber);
             carNumberRepository.setLastIssuedNumber(randomCarNumber);
             return randomCarNumber;
         }
@@ -43,11 +42,12 @@ public class CarNumberGeneratorServiceImpl implements CarNumberGeneratorService 
         if (lastIssuedCarNumber.isPresent()) {
             nextCarNumber = carNumberRepository.getNext(lastIssuedCarNumber.get());
         } else {
-            nextCarNumber = carNumberRepository.getByPosition(0);
+            Optional<CarNumber> firstCarNumber = carNumberRepository.getByPosition(0);
+            nextCarNumber = firstCarNumber;
         }
         if (nextCarNumber.isPresent()) {
+            carNumberRepository.issue(nextCarNumber.get());
             carNumberRepository.setLastIssuedNumber(nextCarNumber.get());
-            carNumberRepository.delete(nextCarNumber.get());
             return nextCarNumber.get();
         }
         throw new NumbersRanOutException();

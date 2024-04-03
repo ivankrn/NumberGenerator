@@ -1,5 +1,7 @@
 databaseChangeLog:
   - include:
-      file: db/changelog/db.changelog-create-car-number.yaml
+      file: db/changelog/db.changelog-create-car-number-31-03-2024.yaml
   - include:
-      file: db/changelog/db.changelog-create-user.yaml
+      file: db/changelog/db.changelog-create-user-31-03-2024.yaml
+  - include:
+      file: db/changelog/db.changelog-add-car-number-soft-delete-04-04-2024.yaml

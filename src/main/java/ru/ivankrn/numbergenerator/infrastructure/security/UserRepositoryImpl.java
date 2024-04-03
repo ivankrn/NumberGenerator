@@ -1,12 +1,10 @@
-package ru.ivankrn.numbergenerator.infrastructure.repository;
+package ru.ivankrn.numbergenerator.infrastructure.security;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.NoResultException;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.TypedQuery;
 import org.springframework.stereotype.Repository;
-import ru.ivankrn.numbergenerator.domain.entity.User;
-import ru.ivankrn.numbergenerator.domain.repository.UserRepository;
 
 import java.util.Optional;
 

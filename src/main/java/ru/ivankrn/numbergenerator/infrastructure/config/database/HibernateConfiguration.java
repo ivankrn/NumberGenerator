@@ -33,7 +33,7 @@ public class HibernateConfiguration {
         LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
         em.setDataSource(dataSource());
         em.setJpaProperties(hibernateProperties());
-        em.setPackagesToScan("ru.ivankrn.numbergenerator.domain.entity");
+        em.setPackagesToScan("ru.ivankrn.numbergenerator");
         HibernateJpaVendorAdapter jpaVendorAdapter = new HibernateJpaVendorAdapter();
         em.setJpaVendorAdapter(jpaVendorAdapter);
         return em;

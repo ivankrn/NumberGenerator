@@ -1,14 +1,14 @@
 package ru.ivankrn.numbergenerator.infrastructure.util;
 
-import jakarta.transaction.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
-import ru.ivankrn.numbergenerator.domain.entity.Role;
-import ru.ivankrn.numbergenerator.domain.entity.User;
-import ru.ivankrn.numbergenerator.domain.repository.UserRepository;
+import org.springframework.transaction.annotation.Transactional;
+import ru.ivankrn.numbergenerator.infrastructure.security.Role;
+import ru.ivankrn.numbergenerator.infrastructure.security.User;
+import ru.ivankrn.numbergenerator.infrastructure.security.UserRepository;
 
 @Component
 public class UserInitializer implements CommandLineRunner {

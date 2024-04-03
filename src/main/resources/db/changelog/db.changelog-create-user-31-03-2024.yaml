@@ -1,6 +1,6 @@
 databaseChangeLog:
   - changeSet:
-      id: 4
+      id: create_security_user_id_seq
       author: admin
       changes:
         - createSequence:
@@ -9,7 +9,7 @@ databaseChangeLog:
             schemaName: public
             sequenceName: security_user_id_seq
   - changeSet:
-      id: 5
+      id: create_security_user_table
       author: admin
       changes:
         - createTable:

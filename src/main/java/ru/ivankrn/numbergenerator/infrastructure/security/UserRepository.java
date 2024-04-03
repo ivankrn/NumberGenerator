@@ -1,6 +1,4 @@
-package ru.ivankrn.numbergenerator.domain.repository;
-
-import ru.ivankrn.numbergenerator.domain.entity.User;
+package ru.ivankrn.numbergenerator.infrastructure.security;
 
 import java.util.Optional;
 

@@ -12,6 +12,6 @@ public interface CarNumberRepository {
     long getCount();
     Optional<CarNumber> getLastIssuedNumber();
     void setLastIssuedNumber(CarNumber carNumber);
-    void delete(CarNumber carNumber);
+    void issue(CarNumber carNumber);
 
 }

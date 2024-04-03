@@ -1,6 +1,6 @@
 databaseChangeLog:
   - changeSet:
-      id: 1
+      id: create_car_number_id_seq
       author: admin
       changes:
         - createSequence:
@@ -9,7 +9,7 @@ databaseChangeLog:
             schemaName: public
             sequenceName: car_number_id_seq
   - changeSet:
-      id: 2
+      id: create_car_number_table
       author: admin
       changes:
         - createTable:
@@ -45,7 +45,7 @@ databaseChangeLog:
                     unique: true
                     uniqueConstraintName: car_number_unique
   - changeSet:
-      id: 3
+      id: create_last_issued_car_number_table
       author: admin
       changes:
         - createTable:

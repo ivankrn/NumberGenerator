@@ -1,0 +1,27 @@
+databaseChangeLog:
+  - changeSet:
+      id: add_car_number_soft_delete
+      author: admin
+      changes:
+        - addColumn:
+            tableName: car_number
+            columns:
+              - column:
+                  name: is_issued
+                  type: BOOLEAN
+                  defaultValueBoolean: false
+                  constraints:
+                    nullable: false
+  - changeSet:
+      id: add_last_issued_car_number_soft_delete
+      author: admin
+      changes:
+        - addColumn:
+            tableName: last_issued_car_number
+            columns:
+              - column:
+                  name: is_issued
+                  type: BOOLEAN
+                  defaultValueBoolean: false
+                  constraints:
+                    nullable: false

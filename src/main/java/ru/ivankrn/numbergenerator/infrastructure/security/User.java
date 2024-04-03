@@ -1,4 +1,4 @@
-package ru.ivankrn.numbergenerator.domain.entity;
+package ru.ivankrn.numbergenerator.infrastructure.security;
 
 import jakarta.persistence.*;
 import org.springframework.security.core.GrantedAuthority;
@@ -8,8 +8,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Collection;
 import java.util.List;
 
-// TODO Спросить про местоположение пользователя: в домене или инфраструктурном слое? Формально его нет в задании, но
-//  он нужен для ограничения доступа, и по смыслу тоже становится сущностью?
 @Entity
 @Table(name = "security_user")
 public class User implements UserDetails {
